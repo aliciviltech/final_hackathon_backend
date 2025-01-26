@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import { authRoutes } from './routes/authRoutes.js'
 import mongoose from 'mongoose'
+import { beneficiaryRoutes } from './routes/beneficiaryRoutes.js'
 dotenv.config()
 
 // routes and middleware
@@ -13,6 +14,7 @@ app.get('/', (req,res)=>{
     res.status(200).send('Welcome to backend')
 })
 app.use('/auth', authRoutes);
+app.use('/beneficiary', beneficiaryRoutes);
 
 
 
