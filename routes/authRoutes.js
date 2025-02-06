@@ -36,13 +36,16 @@ authRoutes.post('/register', async (req, res) => {
 // login / get user from mongoDB, find with email
 authRoutes.post('/login', async (req, res) => {
 
-    const { email, password } = req.body;
-    if (!email || !password) {
+    const { email, password, selectedRole } = req.body;
+    if (!email || !password ) {
         return res.status(400).send({ message: "Please fill all the fields" })
     }
     const user = await User.findOne({ email });
     if (!user) {
         return res.status(400).send({ message: "User not found" })
+    }
+    if (user.role !== selectedRole ) {
+        return res.status(400).send({ message: `${selectedRole} with this email does not exist` })
     }
     const isValidPassword = await bcrypt.compare(password, user?.password);
     if (!isValidPassword) {
